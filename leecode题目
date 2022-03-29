@@ -1,0 +1,69 @@
+#### [16. 最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/)(中等)
+
+###### 给你一个长度为 n 的整数数组 nums 和 一个目标值 target。请你从 nums 中选出三个整数，使它们的和与 target 最接近。
+
+###### 返回这三个数的和。
+
+###### 假定每组输入只存在恰好一个解。
+
+示例 1：
+
+输入：nums = [-1,2,1,-4], target = 1
+输出：2
+解释：与 target 最接近的和是 2 (-1 + 2 + 1 = 2) 。
+
+示例 2：
+
+输入：nums = [0,0,0], target = 1
+输出：0
+
+
+提示：
+
+3 <= nums.length <= 1000
+-1000 <= nums[i] <= 1000
+-104 <= target <= 104
+
+___
+
+Javascript
+
+```
+/**
+
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+   */
+   var threeSumClosest = function(nums, target) {
+   // nums.sort(function(a,b){
+   //     return a-b;
+   // });
+   nums=nums.sort((a,b) => a-b)//升序排列
+   let result = nums[0]+nums[1]+nums[2]//定义一个变量，为数组nums中的三个相加
+   if(nums.length == 3) return result//如果长度恰好为三，直接输出该数组
+   for(let index=0;index<nums.length-1;index++){
+       //遍历该数组
+       let [pl,pr]=[index+1,nums.length-1]
+       //定义双指针，分别指向左端点和右端点
+       while(pl<pr){//这个while条件相当于就是while（1）
+           const sum = nums[index]+nums[pl]+nums[pr]
+           //定义一个集合sum用来和target做比较
+           if(sum === target) return target
+           //如果恰好相等 则输出
+           const diff =sum - target
+           //定义一个diff用来和sum做最接近的比较
+           diff<0?pl++:pr--
+           //进行一个判断，如果该差值小于0，则让左指针+1，反之右指针+1
+           result =Math.abs(diff)<Math.abs(result-target)?sum:result
+           //对result判断，使用Math.abs方法，该方法返回传入参数的绝对值
+       }
+       }
+       return result
+
+};
+//先排序，nums长度为length，给一个循环，开始遍历该数组
+//好像不需要排序。只需要
+//用target
+```
+
