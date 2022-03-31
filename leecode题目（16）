@@ -59,7 +59,6 @@ Javascript
        }
        }
        return result
-
 };
 //先排序，nums长度为length，给一个循环，开始遍历该数组
 //好像不需要排序。只需要
