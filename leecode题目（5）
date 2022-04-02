@@ -1,0 +1,105 @@
+#### [5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+
+##### 动态规划中心扩展
+
+给你一个字符串 s，找到 s 中最长的回文子串。
+
+示例 1：
+
+输入：s = "babad"
+输出："bab"
+解释："aba" 同样是符合题意的答案。
+示例 2：
+
+输入：s = "cbbd"
+输出："bb"
+
+
+提示：
+
+1 <= s.length <= 1000
+s 仅由数字和英文字母组成
+
+
+
+```javascript
+/**
+ \* @param {string} s
+ \* @return {string}
+ */
+// var longestPalindrome = function(s) {
+//   // let set = new Set()
+//   // while (s.length = 1) return s;
+//   // let target = 0;
+//   // let[pl,pr] = [target,s.length-1];
+//   // while(pr<s.length){
+//   //   if(s.pr=s.pl){
+//   //     pr++
+//   //     pl++
+//   //   }else{
+//   //   }
+//   // }
+
+//   /暴力解法：
+//   let n = s.length;
+//   let result = ''
+//   for(let i=0;i<n;i++){
+//     for(let j=i+1;j<=n;j++){
+//       let str = s.slice(i,j);
+//       let f= str.split('').reverse().join('');
+//       //slice() 方法可从已有的数组中返回选定的元素。
+//       //slice() 方法可提取字符串的某个部分，并以新的字符串返回被提取的部分。
+//       //split() 通过指定分隔符对字符串进行切片
+//       if(str==f){
+//         result = str.length>result.length?str:result;
+//       }
+//     }
+//   }
+//   return result;
+  //暴力结束（超时）
+
+
+  //中心扩展。动态规划
+  //中心扩展法
+var longestPalindrome = function(s) {
+  if(!s || s.length < 2){
+    return s
+  }
+  var start = 0
+  var end = 0
+  var n = s.length
+  //中心扩展
+  function centerExpend(left,right){
+    while(left >=0 && right < n && s[left] == s[right]){
+      left--
+      right++
+    }
+    return right-left-1
+  }
+  for(var i=0;i<n;i++){
+    var len1 = centerExpend(i,i)
+    var len2 = centerExpend(i,i+1)
+    //两种组合取最大的回文串长度
+    var maxLen = Math.max(len1,len2)
+    if(maxLen > end-start){
+      //更新最大回文串的首位字符索引
+      start = i - ((maxLen-1) >> 1) //>>右移操作
+      end = i + (maxLen >> 1)
+    }
+  }
+  return s.substring(start,end+1)
+};
+
+
+  // while(s.pl != s.pr){
+  //   target = 0
+  //   //让指针继续行动
+  // }
+  // while(s.pl = s.pr){
+  //   targrt = 1
+  //   //指针继续行动，每行动一次相同的元素target++
+  // }
+  // //在这个过程中如果重新遇到了不相同的元素，清空target，// };
+//双指针思路：当左指针和右指针不相等时，剔除这两个元素；当这两个元素相等时，记录sum=1，向前推进，每碰到一次相同元素，则sum++，当遇到不同元素后，剔除之前所有元素，重置sum，直至遍历结束。输出sum取最大时所记录的字符串。
+```
+
